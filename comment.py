@@ -7,10 +7,10 @@ def rs(length): return "".join(random.choices("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefg
 def readAccounts(file):
     with open(file,"r") as f: a=f.read()
     return a.split("\n")
-def comment(user,pid,text):
+def comment(user,pw,pid,text):
     try:
         print("\033[33m[LOGIN]\033[37m         "+user)
-        session=scratchattach.login(user,"kocicka1")
+        session=scratchattach.login(user,pw)
         print("\033[35m[LOADING]\033[37m       "+user)
         project=session.connect_project(pid)
         comment=text
@@ -26,5 +26,6 @@ def comment(user,pid,text):
 pid=int(input("\033[36m[INPUT]\033[37m         ID: "))
 c=input("\033[36m[INPUT]\033[37m         Comment: ")
 accounts=readAccounts("accounts.txt")
+with open("password.txt") as f: password=f.read()
 for name in accounts:
-    Thread(target=comment,args=(name,pid,c)).start()
+    Thread(target=comment,args=(name,password,pid,c)).start()
