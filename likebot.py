@@ -7,10 +7,10 @@ def rs(length): return "".join(random.choices("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefg
 def readAccounts(file):
     with open(file,"r") as f: a=f.read()
     return a.split("\n")
-def bot(user,pid):
+def bot(user,pw,pid):
     try:
         print("\033[33m[LOGIN]\033[37m         "+user)
-        session=scratchattach.login(user,"kocicka1")
+        session=scratchattach.login(user,pw)
         print("\033[35m[LOADING]\033[37m       "+user)
         project=session.connect_project(pid)
         project.love()
@@ -24,5 +24,6 @@ def bot(user,pid):
         print("\033[31m[ERROR]\033[37m         "+user+": "+str(e))
 pid=int(input("\033[36m[INPUT]\033[37m         ID: "))
 accounts=readAccounts("accounts.txt")
+with open("password.txt") as f: password=f.read()
 for name in accounts:
-    Thread(target=bot,args=(name,pid)).start()
+    Thread(target=bot,args=(name,password,pid)).start()
